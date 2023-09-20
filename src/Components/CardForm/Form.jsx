@@ -164,7 +164,7 @@ const Form = ({ getCardDetails, toggle }) => {
             value={initialData.name.value || ""}
             onBlur={handleBlur}
             onChange={handleInputs}
-            className="border border-gray-300 w-full md:w-3/4 p-2 outline-none focus:border-[#83489E] rounded-md mt-1"
+            className="border border-gray-300 w-full md:w-3/4 p-2 outline-none focus:border-[#bd5454] rounded-md mt-1"
           />
           {initialData.name.error && (
             <p className="mt-1 text-xs text-red-500">Can't be blank</p>
@@ -182,7 +182,7 @@ const Form = ({ getCardDetails, toggle }) => {
             value={initialData.number.value || ""}
             onChange={hanldeCardNumberInput}
             onBlur={handleBlur}
-            className="border border-gray-300 w-full md:w-3/4 p-2 rounded-md mt-1"
+            className="border border-gray-300 w-full md:w-3/4 p-2 outline-none focus:border-[#bd5454]  rounded-md mt-1"
           />
           {initialData.number.error && (
             <p className="text-xs mt-1 text-red-500">{cardNumberError}</p>
@@ -207,7 +207,7 @@ const Form = ({ getCardDetails, toggle }) => {
                   value={initialData.month.value || ""}
                   onChange={handleInputs}
                   onBlur={handleBlur}
-                  className="border border-gray-300  p-2 rounded-md mt-1"
+                  className="border border-gray-300  p-2 outline-none focus:border-[#bd5454]  rounded-md mt-1"
                 />
               </div>
               <div className="flex flex-col w-1/2">
@@ -222,7 +222,7 @@ const Form = ({ getCardDetails, toggle }) => {
                   value={initialData.year.value || ""}
                   onChange={handleInputs}
                   onBlur={handleBlur}
-                  className="border border-gray-300 p-2 rounded-md mt-1"
+                  className="border border-gray-300 p-2 outline-none focus:border-[#bd5454]  rounded-md mt-1"
                 />
               </div>
             </div>
@@ -249,7 +249,7 @@ const Form = ({ getCardDetails, toggle }) => {
                 value={initialData.cvc.value || ""}
                 onChange={handleInputs}
                 onBlur={handleBlur}
-                className="border border-gray-300 w-full p-2 rounded-md mt-1"
+                className="border border-gray-300 w-full p-2 outline-none focus:border-[#bd5454]  rounded-md mt-1"
               />
             </div>
             {initialData.cvc.error && (
