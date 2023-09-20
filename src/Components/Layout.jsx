@@ -11,7 +11,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-x-6 w-full h-screen">
+    <div className="flex flex-col md:flex-row gap-x-[70px] w-full h-screen">
       <Card cardData={cardData} data={cardData} />
       <CardForm getCardDetails={getCardDetails} />
     </div>
