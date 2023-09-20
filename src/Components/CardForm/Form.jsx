@@ -216,7 +216,7 @@ const Form = ({ getCardDetails, toggle }) => {
                   id="year"
                   name="year"
                   min={1}
-                  max={12}
+                  max={30}
                   maxLength={2}
                   placeholder="YY"
                   value={initialData.year.value || ""}
