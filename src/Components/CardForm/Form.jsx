@@ -149,12 +149,6 @@ const Form = ({ getCardDetails, toggle }) => {
     }
   };
 
-  const inputStyle = {
-    borderImage: `linear-gradient(164deg, #6348FE 4.74%, #610595 88.83%) 1`,
-    borderImageSlice: "1",
-    transition: "border-color 0.3s ease-in-out",
-  };
-
   return (
     <form action="" onSubmit={handleSubmit}>
       <div className="flex flex-col w-full ">
