@@ -15,7 +15,7 @@ const Front = ({ data }) => {
         <div className="w-[30px] h-[30px] bg-white rounded-full"></div>
         <div className="w-[15px] h-[15px] mx-2 border border-white rounded-full"></div>
       </div>
-      <div className="flex flex-col w-full mt-[50px] text-white text-2xl">
+      <div className="flex flex-col w-full mt-[50px] text-white text-base md:text-2xl">
         <div className="w-full flex flex-row justify-between">
           <p className="">{number?.slice(0, 4) || `0000`}</p>
           <p className="">{number?.slice(5, 9) || `0000`}</p>

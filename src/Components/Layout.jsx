@@ -9,10 +9,16 @@ const Layout = () => {
     setCardData(details);
   };
 
+  const emptyCard = () => {
+    setCardData({});
+  };
+
   return (
     <div className="flex flex-col md:flex-row gap-x-[70px] w-full h-screen">
       <Card cardData={cardData} data={cardData} />
-      <CardFormIndex getCardDetails={getCardDetails} />
+      <CardFormIndex getCardDetails={getCardDetails} 
+      	emptyCard={emptyCard}
+      />
     </div>
   );
 };

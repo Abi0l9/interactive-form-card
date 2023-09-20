@@ -3,7 +3,7 @@ import Form from "./Form";
 import Confirmation from "../Confirmation";
 import { Fade } from "react-awesome-reveal";
 
-const CardFormIndex = ({ getCardDetails }) => {
+const CardFormIndex = ({ getCardDetails, emptyCard }) => {
   const [visibility, setVisibility] = useState(false);
 
   const toggleVisibility = () => {
@@ -18,7 +18,9 @@ const CardFormIndex = ({ getCardDetails }) => {
       )}
       {visibility && (
         <Fade>
-          <Confirmation toggle={toggleVisibility} />
+          <Confirmation toggle={toggleVisibility}
+          emptyCard={emptyCard}
+          />
         </Fade>
       )}
     </div>
