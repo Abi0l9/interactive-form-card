@@ -1,0 +1,280 @@
+import React, { useState } from "react";
+
+const Form = ({ getCardDetails, toggle }) => {
+  const [initialData, setInitialData] = useState({
+    name: {
+      value: "",
+      error: false,
+    },
+    number: {
+      value: "",
+      error: false,
+    },
+    month: {
+      value: "",
+      error: false,
+    },
+    year: {
+      value: "",
+      error: false,
+    },
+    cvc: {
+      value: "",
+      error: false,
+    },
+  });
+  const [cardNumberError, setCardNumberError] = useState("");
+  //   const [monthErrorMsg, setMonthErrorMsg] = useState("");
+  //   const [yearErrorMsg, setYearErrorMsg] = useState("");
+
+  const handleInputs = (e) => {
+    const key = e.target.name;
+    let value = e.target.value;
+
+    if (key === "month" || key === "year") {
+      setInitialData({
+        ...initialData,
+        [key]: { ...[key], value: value.slice(0, 2) },
+      });
+    } else if (key === "cvc") {
+      setInitialData({
+        ...initialData,
+        [key]: { ...[key], value: value.slice(0, 3) },
+      });
+    } else setInitialData({ ...initialData, [key]: { ...[key], value } });
+  };
+
+  const hanldeCardNumberInput = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+
+    const cleanedValue = value.replace(/\s/g, "");
+    let formattedValue = "";
+    let blank = " ";
+
+    if (/[a-zA-Z]/.test(value)) {
+      setCardNumberError("Wrong format, numbers only");
+      setInitialData({
+        ...initialData,
+        [key]: { ...[key], value: value.slice(0, 19), error: true },
+      });
+    } else {
+      for (let i = 0; i < cleanedValue.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+          formattedValue += blank;
+        }
+
+        formattedValue += cleanedValue[i];
+      }
+      setInitialData({
+        ...initialData,
+        [key]: { ...[key], value: formattedValue.slice(0, 19) },
+      });
+    }
+  };
+
+  //   const hanldeMonthAndYearInput = (e) => {
+  //     const key = e.target.name;
+  //     const value = e.target.value;
+
+  //     if (Number(value) < 1) {
+  //       if (key === "month") {
+  //         setMonthErrorMsg("month must be greater than 0");
+  //       } else if (key === "year") {
+  //         setYearErrorMsg("year must be greater than 0");
+  //       }
+
+  //       setInitialData({
+  //         ...initialData,
+  //         [key]: { ...[key], value, error: true },
+  //       });
+  //     } else if (value === "") {
+  //       if (key === "month") {
+  //         setMonthErrorMsg("Can't be blank");
+  //       } else if (key === "year") {
+  //         setYearErrorMsg("Can't be blank");
+  //       } else
+  //         setInitialData({
+  //           ...initialData,
+  //           [key]: { ...[key], value, error: true },
+  //         });
+  //     }
+
+  //     setInitialData({
+  //       ...initialData,
+  //       [key]: { ...[key], value, error: true },
+  //     });
+  //   };
+
+  const handleBlur = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    const error = true;
+
+    if (value === "") {
+      if (key === "number") {
+        setCardNumberError("Can't be blank");
+        setInitialData({ ...initialData, [key]: { ...[key], value, error } });
+      }
+
+      //   else if (key === "month") {
+      //     setMonthErrorMsg("Can't be blank");
+      //     setInitialData({ ...initialData, [key]: { ...[key], value, error } });
+      //   }
+      setInitialData({ ...initialData, [key]: { ...[key], error } });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dataToSubmit = {
+      name: initialData.name.value,
+      number: initialData.number.value,
+      month: initialData.month.value,
+      year: initialData.year.value,
+      cvc: initialData.cvc.value,
+    };
+
+    const allFilled = Object.values(initialData)
+      .map((field) => field.value !== "")
+      .every((field) => field === true);
+
+    const allPassed = Object.values(initialData)
+      .map((field) => field.error)
+      .every((err) => err === false || err === undefined);
+
+    if (allFilled && allPassed) {
+      toggle();
+      getCardDetails(dataToSubmit);
+    }
+  };
+
+  const inputStyle = {
+    borderImage: `linear-gradient(164deg, #6348FE 4.74%, #610595 88.83%) 1`,
+    borderImageSlice: "1",
+    transition: "border-color 0.3s ease-in-out",
+  };
+
+  return (
+    <form action="" onSubmit={handleSubmit}>
+      <div className="flex flex-col w-full ">
+        <div className="flex flex-col my-2">
+          <label htmlFor="name" className="font-semibold">
+            CARDHOLDER NAME
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="e.g Jane Appleseed"
+            value={initialData.name.value || ""}
+            onBlur={handleBlur}
+            onChange={handleInputs}
+            className="border border-gray-300 w-full md:w-3/4 p-2 outline-none focus:border-[#83489E] rounded-md mt-1"
+          />
+          {initialData.name.error && (
+            <p className="mt-1 text-xs text-red-500">Can't be blank</p>
+          )}
+        </div>
+        <div className="relative flex flex-col my-2">
+          <label htmlFor="number" className="font-semibold">
+            CARD NUMBER
+          </label>
+          <input
+            type="text"
+            id="number"
+            name="number"
+            placeholder="e.g 1234 5678 9123 0000"
+            value={initialData.number.value || ""}
+            onChange={hanldeCardNumberInput}
+            onBlur={handleBlur}
+            className="border border-gray-300 w-full md:w-3/4 p-2 rounded-md mt-1"
+          />
+          {initialData.number.error && (
+            <p className="text-xs mt-1 text-red-500">{cardNumberError}</p>
+          )}
+        </div>
+        <div className="relative flex flex-row gap-x-10 w-full md:w-3/4 items-center">
+          <div className="flex flex-col w-1/2">
+            <label htmlFor="month" className="font-semibold">
+              EXP. DATE {`(MM/YY)`}
+            </label>
+
+            <div className="flex flex-row gap-x-3 w-full items-center">
+              <div className="flex flex-col w-1/2">
+                <input
+                  type="number"
+                  min={1}
+                  max={12}
+                  maxLength={2}
+                  id="month"
+                  name="month"
+                  placeholder="MM"
+                  value={initialData.month.value || ""}
+                  onChange={handleInputs}
+                  onBlur={handleBlur}
+                  className="border border-gray-300  p-2 rounded-md mt-1"
+                />
+              </div>
+              <div className="flex flex-col w-1/2">
+                <input
+                  type="number"
+                  id="year"
+                  name="year"
+                  min={1}
+                  max={12}
+                  maxLength={2}
+                  placeholder="YY"
+                  value={initialData.year.value || ""}
+                  onChange={handleInputs}
+                  onBlur={handleBlur}
+                  className="border border-gray-300 p-2 rounded-md mt-1"
+                />
+              </div>
+            </div>
+            {(initialData.month.error || initialData.year.error) && (
+              <p className="absolute -bottom-4 text-xs text-red-500">
+                {/* {monthErrorMsg || yearErrorMsg} */}
+                Can't be blank
+              </p>
+            )}
+          </div>
+          <div className="relative flex flex-row w-1/2 items-center">
+            <div className="flex flex-col w-full my-2">
+              <label htmlFor="cvc" className="font-semibold">
+                CVC
+              </label>
+              <input
+                type="number"
+                id="cvc"
+                name="cvc"
+                min={100}
+                max={999}
+                maxLength={3}
+                placeholder="CVC"
+                value={initialData.cvc.value || ""}
+                onChange={handleInputs}
+                onBlur={handleBlur}
+                className="border border-gray-300 w-full p-2 rounded-md mt-1"
+              />
+            </div>
+            {initialData.cvc.error && (
+              <p className="absolute -bottom-4 text-xs text-red-500">
+                Can't be blank
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col my-5">
+          <input
+            type="submit"
+            value="Confirm"
+            className="bg-gray-800 active:bg-gray-700 text-gray-200 w-full md:w-3/4 p-2 rounded-md mt-1"
+          />
+        </div>
+      </div>
+    </form>
+  );
+};
+
+export default Form;
