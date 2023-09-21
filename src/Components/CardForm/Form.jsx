@@ -48,7 +48,10 @@ const Form = ({ getCardDetails, toggle }) => {
     const key = e.target.name;
     const value = e.target.value;
 
-    const cleanedValue = value.replace(/\s/g, "");
+    const cleanedValue = value
+      .replace(/\s/g, "")
+      .replace(/_/g, "")
+      .replace(/[^\w\s]/g, "");
     let formattedValue = "";
     let blank = " ";
 
@@ -66,10 +69,11 @@ const Form = ({ getCardDetails, toggle }) => {
 
         formattedValue += cleanedValue[i];
       }
-      setInitialData({
-        ...initialData,
-        [key]: { ...[key], value: formattedValue.slice(0, 19) },
-      });
+      
+        setInitialData({
+          ...initialData,
+          [key]: { ...[key], value: formattedValue.slice(0, 19) },
+        });
     }
   };
 
