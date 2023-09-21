@@ -69,11 +69,11 @@ const Form = ({ getCardDetails, toggle }) => {
 
         formattedValue += cleanedValue[i];
       }
-      
-        setInitialData({
-          ...initialData,
-          [key]: { ...[key], value: formattedValue.slice(0, 19) },
-        });
+
+      setInitialData({
+        ...initialData,
+        [key]: { ...[key], value: formattedValue.slice(0, 19) },
+      });
     }
   };
 
@@ -129,6 +129,21 @@ const Form = ({ getCardDetails, toggle }) => {
     }
   };
 
+  const confirmNumberLen = () => {
+    if (initialData?.number?.value?.length < 19) {
+      setCardNumberError("Card number must be upto 16 digits");
+      setInitialData({
+        ...initialData,
+        number: {
+          ...initialData.number,
+          error: true,
+        },
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataToSubmit = {
@@ -147,7 +162,7 @@ const Form = ({ getCardDetails, toggle }) => {
       .map((field) => field.error)
       .every((err) => err === false || err === undefined);
 
-    if (allFilled && allPassed) {
+    if (allFilled && confirmNumberLen() && allPassed) {
       toggle();
       getCardDetails(dataToSubmit);
     }
