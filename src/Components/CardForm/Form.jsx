@@ -41,7 +41,12 @@ const Form = ({ getCardDetails, toggle }) => {
         ...initialData,
         [key]: { ...[key], value: value.slice(0, 3) },
       });
-    } else setInitialData({ ...initialData, [key]: { ...[key], value } });
+    }  else if (key === "name") {
+      setInitialData({
+        ...initialData,
+        [key]: { ...[key], value: value.slice(0, 30) },
+      });
+    }  else setInitialData({ ...initialData, [key]: { ...[key], value } });
   };
 
   const hanldeCardNumberInput = (e) => {
